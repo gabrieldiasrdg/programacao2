@@ -64,6 +64,6 @@ public class EX11 {
 
     public static void main(String[] args) {
         int tempo = lerAmpulhetas();
-        System.out.println(tempo);
+        System.out.println(tempo+ "");
     }
 }
