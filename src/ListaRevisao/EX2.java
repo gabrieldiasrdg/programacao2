@@ -1,6 +1,6 @@
-package lista3;
+package ListaRevisao;
 
-public class EX10 {
+public class EX2 {
     public static void main(String[] args) {
         System.out.println("Hello, world!");
     }
