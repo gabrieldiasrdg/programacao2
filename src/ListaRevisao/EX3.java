@@ -2,7 +2,7 @@ package ListaRevisao;
 
 import java.util.Scanner;
 
-public class EX3 {
+public class  EX3 {
 
     public static int somaDosQuadrados(int n){
         int soma = 0, valorAtual = 0;
