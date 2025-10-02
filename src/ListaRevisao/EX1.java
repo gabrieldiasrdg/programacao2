@@ -100,7 +100,6 @@ public class EX1 {
         return planilha;
     }
 
-
     //PARTE DAS RECEITAS
 
     public static double[][] receitas(double[][] planilha) {
@@ -232,6 +231,19 @@ public class EX1 {
 
         System.out.println();
 
+    }
+
+    //LISTANDO MESES
+    public static void listarMeses(double[][] planilhaDespesa, double[][] planilhaReceitas) {
+        double[] totalMes = new double[12];
+
+        for (int i = 0; i < totalMes.length; i++) {
+            for (int j = 0; j < planilhaReceitas.length; j++) {
+                for (int k = 0; k < planilhaReceitas.length; k++) {
+
+                }
+            }
+        }
     }
 
 
