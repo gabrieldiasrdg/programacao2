@@ -61,7 +61,6 @@ public class EX1 {
         semana--; //ARRUMAR INDICE DA SEMANA
 
         //EXCLUINDO O VALOR
-
         planilha[mes][semana] = 0;
 
         printarAcao(planilha, mes, semana);
@@ -101,7 +100,6 @@ public class EX1 {
     }
 
     //PARTE DAS RECEITAS
-
     public static double[][] receitas(double[][] planilha) {
         Scanner sc = new Scanner(System.in);
         int op = 0;
@@ -126,7 +124,7 @@ public class EX1 {
         }
 
         if (!sair) {
-            despesas(planilha);
+            receitas(planilha);
         }
 
         return planilha;
@@ -134,28 +132,19 @@ public class EX1 {
 
     //ÁREA DAS ESTATÍSTICAS
     public static void estatisticas(double[][] planilhaDespesa, double[][] planilhaReceita) {
-        Scanner sc = new Scanner(System.in);
-        double[] receitasMes =  new double[12];
-        double[] despesasMes =  new double[12];
         double totalReceitas = 0, totalDespesas = 0, totalAno = 0, maiorValorReceita = 0, maiorValorDespesa = 0;
         int mesMaiorDespesa = 0, semanaMaiorDespesa = 0, mesMaiorReceita = 0, semanaMaiorReceita = 0;
 
         //REGISTRANDO RECEITAS NO TOTAL
-        for (int i = 0; i < receitasMes.length ; i++) {
-            for(int j = 0 ; j <planilhaReceita.length ; j++ ){
-                for(int k = 0 ; k <planilhaReceita[0].length ; k++ ){
-                    receitasMes[i] += planilhaReceita[j][k];
-                    totalReceitas = receitasMes[i];
-                }
+        for(int j = 0 ; j <planilhaReceita.length ; j++ ){
+            for(int k = 0 ; k <planilhaReceita[0].length ; k++ ){
+                totalReceitas += planilhaReceita[j][k];
             }
         }
         //REGISTRANDO DESPESAS NO TOTAL
-        for (int i = 0; i < despesasMes.length ; i++) {
-            for(int j = 0 ; j <planilhaDespesa.length ; j++ ){
-                for(int k = 0 ; k <planilhaDespesa[0].length ; k++ ){
-                    despesasMes[i] -= planilhaDespesa[j][k];
-                    totalDespesas = despesasMes[i];
-                }
+        for(int j = 0 ; j <planilhaDespesa.length ; j++ ){
+            for(int k = 0 ; k <planilhaDespesa[0].length ; k++ ){
+                totalDespesas += planilhaDespesa[j][k];
             }
         }
 
@@ -186,7 +175,7 @@ public class EX1 {
                     mesMaiorDespesa = i;
                     semanaMaiorDespesa = j;
                 } else {
-                    if (planilhaReceita[i][j] > maiorValorReceita) {
+                    if (planilhaDespesa[i][j] > maiorValorDespesa) {
                         maiorValorDespesa = planilhaDespesa[i][j];
                         mesMaiorDespesa = i;
                         semanaMaiorDespesa = j;
@@ -194,7 +183,7 @@ public class EX1 {
                 }
             }
         }
-        //MÉDIA MENSAL DE DESPESAS
+        //MÉDIA MENSAL DE RECEITAS
         double somaReceitaMensal = 0;
         double mediaReceitaMensal = 0;
         for (int i = 0; i < planilhaReceita.length ; i++) {
@@ -203,7 +192,8 @@ public class EX1 {
             }
         }
         mediaReceitaMensal = somaReceitaMensal / 12;
-        //MÉDIA MENSAL DE RECEITAS
+
+        //MÉDIA MENSAL DE DESPESAS
         double somaDespesaMensal = 0;
         double mediaDespesaMensal = 0;
         for (int i = 0; i < planilhaDespesa.length ; i++) {
@@ -211,7 +201,7 @@ public class EX1 {
                 somaDespesaMensal += planilhaDespesa[i][j];
             }
         }
-        mediaReceitaMensal = somaReceitaMensal / 12;
+        mediaDespesaMensal = somaDespesaMensal / 12;
 
         //EXIBIR ESTATÍSTICAS
         System.out.printf("TOTAL DE DESPESAS(ANO): %.2f\n", totalDespesas);
@@ -238,17 +228,21 @@ public class EX1 {
         double[] totalMes = new double[12];
 
         for (int i = 0; i < totalMes.length; i++) {
-            for (int j = 0; j < planilhaReceitas.length; j++) {
-                for (int k = 0; k < planilhaReceitas.length; k++) {
-
+            for (int j = i; j < i+1 ; j++) {
+                for (int k = 0; k < planilhaReceitas[0].length; k++) {
+                    totalMes[i] += planilhaReceitas[j][k];
+                    totalMes[i] -= planilhaDespesa[j][k];
                 }
             }
         }
+
+        for (int i = 0; i < totalMes.length; i++) {
+            System.out.printf("Mês %d: %.2f\n", i+1, totalMes[i]);
+        }
+        System.out.println();
     }
 
-
     //MAIN
-
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int op = 0;
@@ -281,9 +275,10 @@ public class EX1 {
                 receitas(planilhaReceitas);
             } else if (op == 3) {
                 System.out.println("ABRINDO MENU DE ver estatísticas...\n");
-                estatisticas(planilhaDespesa, planilhaDespesa);
+                estatisticas(planilhaDespesa, planilhaReceitas);
             } else if (op == 4) {
                 System.out.println("LISTANDO MESES...\n");
+                listarMeses(planilhaDespesa, planilhaReceitas);
             } else if (op == 5){
                 sair = true;
             }
@@ -294,11 +289,6 @@ public class EX1 {
     }
 
     public static void printarAcao(double[][]  planilha, int mes, int semana) {
-        for (int i = mes; i < mes+1; i++) {
-            for (int j = 0; j < planilha[mes].length; j++) {
-                System.out.printf("Mês %d, Semana %d: R$%.2f", i+1, semana+1, planilha[i][j]);
-            }
-            System.out.println();
-        }
+        System.out.printf("Mês %d, Semana %d: R$%.2f\n", mes+1, semana+1, planilha[mes][semana]);
     }
 }
