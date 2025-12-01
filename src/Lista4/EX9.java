@@ -28,7 +28,6 @@ public class EX9 {
     }
 
     public static int somaVetores(int[] vet1, int[] vet2,  int[] vetSoma, int i) {
-        int soma = 0;
         if (i == vetSoma.length-1) {
             vetSoma[i] = vet1[i]+vet2[i];
             return vetSoma[i];
